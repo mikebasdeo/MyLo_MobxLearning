@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react'
 import { observable, computed, action } from 'mobx'
+import { number } from 'prop-types';
 
 class SheetStore {
   @observable inputGrid = [
@@ -15,21 +16,33 @@ class SheetStore {
   @computed get inputMap(){
     const rows = this.inputGrid.slice()
     const map = {}
-
     rows.forEach((row) => {
       row.slice().forEach((cell) => {
         map[cell.id] = cell
       })
     })
-
     return map
   }
 
+  @computed get totalRow() {
+    const rows = this.inputGrid.slice()
+    const columnCount = rows[0].length
+    const totals = new Array(columnCount)
+    for (let i = 0; i < columnCount; i ++) {
+      let total = rows.map(row => row.slice()[i].value)
+        .reduce((sum, num)=> sum + num, 0)
+      totals[i] = total
+    }
+    return totals
+  }
+  @computed get grandTotal() {
+    return this.totalRow.reduce((sum, val) => sum + val, 0)
+  }
+ 
   @action
   setValue(value, id) {
     this.inputMap[id].value = parseFloat(value)
   }
-
 }
 
 const sheet = new SheetStore()
@@ -43,7 +56,7 @@ export default class Sheet extends Component<{}> {
   }
 
   render() {
-    const { inputGrid } = sheet
+    const { inputGrid, totalRow, grandTotal } = sheet
     console.log(inputGrid.length)
 
     return (
@@ -72,6 +85,24 @@ export default class Sheet extends Component<{}> {
               )
             })
           }
+          <tr>
+            {
+              totalRow.map((x, index) => {
+                return (
+                  <td key={index}>
+                    <strong>
+                      {x}
+                    </strong>
+                  </td>
+                 )
+              })
+            }  
+            <td>
+              <span>
+                {grandTotal}
+              </span>
+            </td>
+          </tr>
         </tbody>
       </table>
     )
