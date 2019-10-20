@@ -13,6 +13,7 @@ class SheetStore {
     [{id: 'D1', value: 2}, {id: 'D2', value: 1}, {id: 'D3', value: 1}, {id: 'D4', value: 1}],
   ]
 
+  // computed values are always ready to party
   @computed get inputMap(){
     const rows = this.inputGrid.slice()
     const map = {}

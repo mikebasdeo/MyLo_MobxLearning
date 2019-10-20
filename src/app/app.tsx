@@ -52,6 +52,7 @@ ReactDOM.render(
     <Person name='Q' isSpy={false} age={55}>
       <License licenseToKill={false}/>
     </Person>
+    <Sheet/>
   </div>
   ,
   document.getElementById("root")
