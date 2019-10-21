@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 // class import
 import Sheet from './Sheet'
+import EventForm from './Event'
 // functional import
 import { Clock } from './Clock'
 
@@ -44,14 +45,15 @@ const Person: React.FunctionComponent<{ name: string, isSpy: boolean, age: numbe
 // main method
 ReactDOM.render(
   <div>
-    <Clock/>
+    {/* <Clock/>
     <Person name='James Bond' isSpy={true} age={55}>
       <License licenseToKill={true}/>
     </Person>
 
     <Person name='Q' isSpy={false} age={55}>
       <License licenseToKill={false}/>
-    </Person>
+    </Person> */}
+    <EventForm/>
   </div>
   ,
   document.getElementById("root")
